@@ -24,5 +24,4 @@ public class SpringBatchExampleApplicationTests {
 		assertNotNull(job);
 		assertEquals(ProjectConstants.JOB_NAME,job.getName());
 	}
-
 }
