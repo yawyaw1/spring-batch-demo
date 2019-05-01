@@ -1,4 +1,4 @@
-package spring.batch.example.entities;
+package com.spring.batch.example.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;

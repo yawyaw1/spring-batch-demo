@@ -1,5 +1,8 @@
-package spring.batch.example.config;
+package com.spring.batch.example.config;
 
+import com.spring.batch.example.entities.PatientRecord;
+import com.spring.batch.example.enums.ProjectConstants;
+import com.spring.batch.example.exception.JobParametersInvalideException;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParametersValidator;
 import org.springframework.batch.core.Step;
@@ -16,9 +19,6 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.StringUtils;
-import spring.batch.example.entities.PatientRecord;
-import spring.batch.example.enums.ProjectConstants;
-import spring.batch.example.exception.JobParametersInvalideException;
 
 import java.io.File;
 import java.nio.file.Files;

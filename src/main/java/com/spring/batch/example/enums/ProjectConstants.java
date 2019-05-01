@@ -1,4 +1,4 @@
-package spring.batch.example.enums;
+package com.spring.batch.example.enums;
 
 /**
  * Created by Adservio on 26/02/2019.

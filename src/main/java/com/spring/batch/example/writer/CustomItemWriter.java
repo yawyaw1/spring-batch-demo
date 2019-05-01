@@ -1,4 +1,4 @@
-package spring.batch.example.writer;
+package com.spring.batch.example.writer;
 
 import org.springframework.batch.item.ItemWriter;
 

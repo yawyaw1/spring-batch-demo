@@ -1,12 +1,14 @@
-package spring.batch.example.resource;
+package com.spring.batch.example.resource;
 
 
+import com.spring.batch.example.enums.ProjectConstants;
+import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import spring.batch.example.enums.ProjectConstants;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +19,10 @@ import java.util.Map;
 
 
 
+@RestController
 public class UserJobRestController {
+
+    JobExecution jobExecution;
 
 
     @GetMapping("/{filename:.+}")

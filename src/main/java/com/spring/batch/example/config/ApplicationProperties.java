@@ -1,4 +1,4 @@
-package spring.batch.example.config;
+package com.spring.batch.example.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
