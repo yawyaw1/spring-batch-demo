@@ -1,8 +1,12 @@
 package com.spring.batch.example.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.springframework.batch.item.ResourceAware;
+import org.springframework.core.io.Resource;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -12,23 +16,17 @@ import java.time.LocalDate;
  */
 
 @Data
-@NoArgsConstructor
+@NoArgsConstructor @ToString
 @Entity(name = "User")
 @Table(name = "USER")
-public class User {
+public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "VERSION")
-    private String version;
-
-    @Column(name = "CREATE_DATE")
-    private LocalDate creationDate;
-
-    @Column(name = "FIRSTNAME")
-    private String firstname;
+    @Column(name = "FISTNAME")
+    private String fistname;
 
     @Column(name = "LASTNAME")
     private String lastname;
@@ -36,8 +34,11 @@ public class User {
     @Column(name = "USERNAME")
     private String username;
 
-    @JsonIgnore
-    @Column(name = "PASSWORD")
-    private String password;
+    public User(Long id, String firstname, String lastname,String username){
+        this.id=id;
+        this.fistname=firstname;
+        this.lastname=lastname;
+        this.username=username;
+    }
 
 }
