@@ -23,9 +23,7 @@ import javax.sql.DataSource;
 /**
  * Created by Adservio on 05/05/2019.
  */
-
-@Configuration
-public class WriterToDBJobConfig {
+public class ReadFromFileWriterToDBJobConfig {
 
 
     @Autowired
@@ -51,6 +49,7 @@ public class WriterToDBJobConfig {
         lineMapper.setLineTokenizer(tokenizer);
         lineMapper.setFieldSetMapper(new CustomFieldSetMapper());
         lineMapper.afterPropertiesSet();
+
         userFlatFileItemReader.setLineMapper(lineMapper);
         return userFlatFileItemReader;
     }
@@ -77,7 +76,7 @@ public class WriterToDBJobConfig {
 
     @Bean
     public Job jobWriterDb() {
-        return this.jobBuilderFactory.get("job writer db")
+        return this.jobBuilderFactory.get("job writer db1")
                 .start(stepWriterDb())
                 .build();
     }

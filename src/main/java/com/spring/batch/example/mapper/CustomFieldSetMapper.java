@@ -12,9 +12,11 @@ public class CustomFieldSetMapper implements FieldSetMapper<User> {
 
     @Override
     public User mapFieldSet(FieldSet fieldSet) throws BindException {
-        return new User(fieldSet.readLong("id"),
-                fieldSet.readString("fistname"),
-                fieldSet.readString("lastname"),
-                fieldSet.readString("username"));
+        User user = new User();
+        user.setId(fieldSet.readLong("id"));
+        user.setFistname(fieldSet.readString("fistname"));
+        user.setLastname(fieldSet.readString("lastname"));
+        user.setUsername(fieldSet.readString("username"));
+        return user;
     }
 }

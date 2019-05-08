@@ -14,10 +14,11 @@ public class CustomRowMapper implements RowMapper<User> {
 
     @Override
     public User mapRow(ResultSet resultSet, int i) throws SQLException {
-        return new User(resultSet.getLong("id"),
-                resultSet.getString("fistname"),
-                resultSet.getString("lastname"),
-                resultSet.getString("username")
-        );
+        User user = new User();
+        user.setId(resultSet.getLong("id"));
+        user.setFistname(resultSet.getString("fistname"));
+        user.setLastname(resultSet.getString("lastname"));
+        user.setUsername(resultSet.getString("username"));
+        return user;
     }
 }

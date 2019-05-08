@@ -14,7 +14,6 @@ public class CustomItemWriter implements ItemWriter<User> {
 
     @Override
     public void write(List<? extends User> list) throws Exception {
-
         list.forEach(System.out::print);
 
     }

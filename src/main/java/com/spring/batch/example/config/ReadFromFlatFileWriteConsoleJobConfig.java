@@ -22,7 +22,7 @@ import org.springframework.core.io.ClassPathResource;
  * Created by Adservio on 05/05/2019.
  */
 
-public class FlatFileJobConfig {
+public class ReadFromFlatFileWriteConsoleJobConfig {
 
 
     @Autowired

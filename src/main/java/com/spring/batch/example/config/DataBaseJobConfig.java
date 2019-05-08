@@ -3,6 +3,7 @@ package com.spring.batch.example.config;
 import com.spring.batch.example.entities.User;
 import com.spring.batch.example.mapper.CustomRowMapper;
 import com.spring.batch.example.reader.CustomItemReader;
+import com.spring.batch.example.writer.CustomLineAggregator;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersIncrementer;
@@ -11,16 +12,19 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.database.JdbcCursorItemReader;
-import org.springframework.batch.item.database.JdbcPagingItemReader;
-import org.springframework.batch.item.database.Order;
+import org.springframework.batch.item.database.*;
 import org.springframework.batch.item.database.support.MySqlPagingQueryProvider;
+import org.springframework.batch.item.file.FlatFileItemWriter;
+import org.springframework.batch.item.file.transform.PassThroughLineAggregator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.lang.Nullable;
 
 import javax.sql.DataSource;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,7 +62,7 @@ public class DataBaseJobConfig {
 
         MySqlPagingQueryProvider queryProvider = new MySqlPagingQueryProvider();
         queryProvider.setSelectClause("select id, fistname, lastname, username");
-        queryProvider.setFromClause("from user");
+        queryProvider.setFromClause("user");
 
         Map<String, Order> stringIntegerMap = new HashMap<>(2);
         stringIntegerMap.put("id", Order.ASCENDING);
@@ -71,12 +75,20 @@ public class DataBaseJobConfig {
     }
 
     @Bean
-    public ItemWriter<User> itemWriter() {
-        return data -> data.forEach(System.out::print);
+    public ItemWriter<User> itemWriter() throws Exception {
+
+        FlatFileItemWriter<User> flatFileItemWriter = new FlatFileItemWriter<>();
+        flatFileItemWriter.setLineAggregator(new CustomLineAggregator());
+        String createFile= File.createTempFile("customerOutPut",".out").getAbsolutePath();
+        System.out.println("File path : "+createFile);
+        flatFileItemWriter.setResource(new FileSystemResource(createFile));
+        flatFileItemWriter.afterPropertiesSet();
+
+        return flatFileItemWriter;
     }
 
     @Bean
-    public Step stepDataBase() {
+    public Step stepDataBase() throws Exception {
         return this.stepBuilderFactory.get("StepDataBase")
                 .<User, User>chunk(2)
                 .reader(pagingItemReader())
@@ -85,8 +97,8 @@ public class DataBaseJobConfig {
     }
 
     @Bean
-    public Job jobDataBase() {
-        return this.jobBuilderFactory.get("JobDataBaseJDBCPagination")
+    public Job jobDataBase() throws Exception {
+        return this.jobBuilderFactory.get("JobDataBaseJDBCPaginationToFile1Json")
                 .start(stepDataBase())
                 .build();
     }
